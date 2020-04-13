@@ -615,7 +615,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     /**
      * Implements Map.put and related methods.
      *
-     * @param hash hash for key
+     * @param hash hash for key(确定数组下标 )
      * @param key the key
      * @param value the value to put
      * @param onlyIfAbsent if true, don't change existing value
@@ -626,8 +626,8 @@ public class HashMap<K,V> extends AbstractMap<K,V>
                    boolean evict) {
         Node<K,V>[] tab; Node<K,V> p; int n, i;
         if ((tab = table) == null || (n = tab.length) == 0)
-            n = (tab = resize()).length;
-        if ((p = tab[i = (n - 1) & hash]) == null)
+            n = (tab = resize()).length;//获得数组下标
+        if ((p = tab[i = (n - 1) & hash]) == null)//该数组下标下没有值
             tab[i] = newNode(hash, key, value, null);
         else {
             Node<K,V> e; K k;
@@ -635,13 +635,13 @@ public class HashMap<K,V> extends AbstractMap<K,V>
                 ((k = p.key) == key || (key != null && key.equals(k))))
                 e = p;
             else if (p instanceof TreeNode)
-                e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+                e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);//去红黑树里面查找
             else {
-                for (int binCount = 0; ; ++binCount) {
+                for (int binCount = 0; ; ++binCount) {//去链表里面查找
                     if ((e = p.next) == null) {
                         p.next = newNode(hash, key, value, null);
                         if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
-                            treeifyBin(tab, hash);
+                            treeifyBin(tab, hash);//链表够长构造红黑树
                         break;
                     }
                     if (e.hash == hash &&

@@ -884,7 +884,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * establishing the initial table size
      * @param concurrencyLevel the estimated number of concurrently
      * updating threads. The implementation may use this value as
-     * a sizing hint.
+     * a sizing hint.并发级别
      * @throws IllegalArgumentException if the initial capacity is
      * negative or the load factor or concurrencyLevel are
      * nonpositive

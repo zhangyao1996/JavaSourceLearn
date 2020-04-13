@@ -1331,6 +1331,7 @@ public final class Integer extends Number implements Comparable<Integer> {
     public static final int BYTES = SIZE / Byte.SIZE;
 
     /**
+     * 传入一个非负整数，它将返回最大的小于等于这个数字的一个2的幂次方数。
      * Returns an {@code int} value with at most a single one-bit, in the
      * position of the highest-order ("leftmost") one-bit in the specified
      * {@code int} value.  Returns zero if the specified value has no
@@ -1345,12 +1346,13 @@ public final class Integer extends Number implements Comparable<Integer> {
      */
     public static int highestOneBit(int i) {
         // HD, Figure 3-1
-        i |= (i >>  1);
+        i |= (i >>  1);// |或运算,>>右移运算符
         i |= (i >>  2);
         i |= (i >>  4);
         i |= (i >>  8);
         i |= (i >> 16);
-        return i - (i >>> 1);
+        //当低位都变成1
+        return i - (i >>> 1);//低位全部清0
     }
 
     /**
